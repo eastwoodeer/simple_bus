@@ -1,11 +1,11 @@
-MODULE_NAME		:= simple_bus
+MODULE_NAME	      	:= simple_bus
 MODULE_LICENSE		:= GPL
 MODULE_VERSION		:= 0.1
-MODULE_AUTHOR		:= Chen Bin <chen.bin11@zte.com.cn>
+MODULE_AUTHOR		:= kknd<kknd@kdkd.k>
 MODULE_DESCRIPTION	:= simple bus test
 
 ifneq ($(KERNELRELEASE),)
-obj-m			:= $(MODULE_NAME).o
+obj-m			:= $(MODULE_NAME).o test_chip.o test_chip_drv.o
 
 name-fix   = $(squote)$(quote)$(subst $(comma),_,$(subst -,_,$1))$(quote)$(squote)
 ccflags-y += -DCONFIG_MODULE_AUTHOR=$(call name-fix,$(MODULE_AUTHOR))
@@ -24,9 +24,9 @@ clean:
 	$(MAKE) -C $(KERNEL_DIR) M=$(PWD) clean
 
 install:
-	sudo insmod $(MODULE_NAME).ko
+	sudo insmod $(MODULE_NAME).ko test_chip.ko test_chip_drv.ko
 
 remove:
-	sudo rmmod $(MODULE_NAME)
+	sudo rmmod test_chip test_chip_drv $(MODULE_NAME)
 
 endif
